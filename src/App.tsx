@@ -1,49 +1,49 @@
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { useAccount } from 'wagmi'
+import { STORY_CONTRACT } from './contracts'; // 导入合约配置
 
 function App() {
-  const account = useAccount()
-  const connectResult = useConnect()
-  const { connectors, connect, status, error } = connectResult
-  const { disconnect } = useDisconnect()
-
-  // 打印 useConnect 返回的所有内容
-  console.log('useConnect 返回内容:', connectResult)
+  const { address, isConnected, chain } = useAccount()
 
   return (
-    <>
-      <div>
-        <h2>Account</h2>
-
-        <div>
-          status: {account.status}
-          <br />
-          addresses: {JSON.stringify(account.addresses)}
-          <br />
-          chainId: {account.chainId}
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center', 
+      padding: '50px',
+      gap: '20px' 
+    }}>
+      <h1>A simple transfer demo</h1>
+      
+      {/* RainbowKit 的连接按钮 - 处理所有连接逻辑 */}
+      <ConnectButton />
+      
+      {/* 显示连接状态信息 */}
+      {isConnected && (
+        <div style={{ 
+          background: '#f0f0f0', 
+          padding: '20px', 
+          borderRadius: '8px',
+          textAlign: 'center'
+        }}>
+          <h3>账户信息</h3>
+          <p><strong>地址:</strong> {address}</p>
+          <p><strong>网络:</strong> {chain?.name} (ID: {chain?.id})</p>
+          <p><strong>状态:</strong> 已连接 ✅</p>
         </div>
-
-        {account.status === 'connected' && (
-          <button type="button" onClick={() => disconnect()}>
-            Disconnect
-          </button>
-        )}
-      </div>
-
-      <div>
-        <h2>Connect</h2>
-        {connectors.map((connector) => (
-          <button
-            key={connector.uid}
-            onClick={() => connect({ connector })}
-            type="button"
-          >
-            {connector.name}
-          </button>
-        ))}
-        <div>{status}</div>
-        <div>{error?.message}</div>
-      </div>
-    </>
+      )}
+      
+      {!isConnected && (
+        <div style={{ 
+          background: '#fff3cd', 
+          padding: '20px', 
+          borderRadius: '8px',
+          textAlign: 'center'
+        }}>
+          <p>🔗 请点击上方按钮连接钱包</p>
+        </div>
+      )}
+    </div>
   )
 }
 
