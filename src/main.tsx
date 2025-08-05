@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client'
 import { WagmiProvider } from 'wagmi'
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 
+
 import App from './App.tsx'
 import { config } from './wagmi.ts'
 

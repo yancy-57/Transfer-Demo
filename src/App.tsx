@@ -13,7 +13,7 @@ function App() {
       padding: '50px',
       gap: '20px'
     }}>
-      <h1>A simple transfer demo</h1>
+      <h1>A simple Mint demo</h1>
 
       {/* RainbowKit 的连接按钮 - 处理所有连接逻辑 */}
       <ConnectButton />
@@ -26,10 +26,10 @@ function App() {
           borderRadius: '8px',
           textAlign: 'center'
         }}>
-          <h3>账户信息</h3>
-          <p><strong>地址:</strong> {address}</p>
-          <p><strong>网络:</strong> {chain?.name} (ID: {chain?.id})</p>
-          <p><strong>状态:</strong> 已连接 ✅</p>
+          <h3>Wallet Info</h3>
+          <p><strong>Address:</strong> {address}</p>
+          <p><strong>Chain:</strong> {chain?.name} (ID: {chain?.id})</p>
+          <p><strong>Status:</strong> Connected ✅</p>
         </div>
       )}
 
@@ -40,7 +40,7 @@ function App() {
           borderRadius: '8px',
           textAlign: 'center'
         }}>
-          <p>🔗 请点击上方按钮连接钱包</p>
+          <p>🔗 Please click the button above to connect your wallet</p>
         </div>
       )}
       {isConnected && <TransferComponent />}

@@ -2,10 +2,11 @@ import { createConfig, http } from 'wagmi'
 import { mainnet, sepolia } from 'wagmi/chains'
 import { injected, metaMask, walletConnect } from 'wagmi/connectors'
 import { defineChain } from 'viem'
+import { getDefaultConfig } from '@rainbow-me/rainbowkit'
 
 // 定义 Story Aeneid Testnet
 export const storyAeneidTestnet = defineChain({
-  id: 1315,
+  id: 1315, 
   name: 'Story Aeneid Testnet',
   network: 'story-aeneid-testnet',
   nativeCurrency: {
@@ -27,22 +28,28 @@ export const storyAeneidTestnet = defineChain({
   testnet: true,
 })
 //wagmi config
-export const config = createConfig({
-  //支持的区块链网络
-  chains: [mainnet, sepolia, storyAeneidTestnet],
-  //支持的钱包连接器
-  connectors: [
-    injected(),
-    metaMask(),
-    walletConnect({ 
-      projectId: '4eb866dbba331254ddb1c29c29787ebe' // 可选：从 https://cloud.walletconnect.com 获取
-    }),
-  ],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-    [storyAeneidTestnet.id]: http(),
-  },
+// export const config = createConfig({
+//   //支持的区块链网络
+//   chains: [mainnet, sepolia, storyAeneidTestnet],
+//   //支持的钱包连接器
+//   connectors: [
+//     injected(),
+//     metaMask(),
+//     walletConnect({ 
+//       projectId: '4eb866dbba331254ddb1c29c29787ebe' // 可选：从 https://cloud.walletconnect.com 获取
+//     }),
+//   ],
+//   transports: {
+//     [mainnet.id]: http(),
+//     [sepolia.id]: http(),
+//     [storyAeneidTestnet.id]: http(),
+//   },
+// })
+export const config = getDefaultConfig({
+  appName: 'Story Token DApp',
+  projectId: '4eb866dbba331254ddb1c29c29787ebe',
+  chains: [storyAeneidTestnet, mainnet, sepolia], // 把Story网络放在第一位
+  ssr: false,
 })
 
 declare module 'wagmi' {
